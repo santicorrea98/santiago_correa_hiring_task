@@ -1,0 +1,206 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Sample API",
+    "version": "1.0.0"
+  },
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Get mock token",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": ["admin", "user"]
+                }
+              },
+              "required": ["role"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful authentication",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users (Admin only)",
+        "security": [{"api_key": []}],
+        "responses": {
+          "200": {
+            "description": "User list",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "integer"},
+                  "username": {"type": "string"},
+                  "role": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create user (Admin only)",
+        "security": [{"api_key": []}],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {"type": "string"},
+                "role": {"type": "string"}
+              },
+              "required": ["username", "role"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "User created"}
+        }
+      }
+    },
+   "/user/{id}": {
+      "get": {
+        "summary": "Get a specific user by ID (Admin or self)",
+        "security": [{"api_key": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "integer"},
+                "username": {"type": "string"},
+                "role": {"type": "string"}
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/houses": {
+      "get": {
+        "summary": "Get all houses",
+        "security": [{"api_key": []}],
+        "responses": {
+          "200": {
+            "description": "House list",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "integer"},
+                  "address": {"type": "string"},
+                  "num_rooms": {"type": "integer"},
+                  "price": {"type": "number"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/house": {
+      "post": {
+        "summary": "Create house",
+        "security": [{"api_key": []}],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {"type": "string"},
+                "num_rooms": {"type": "integer"},
+                "price": {"type": "number"}
+              },
+              "required": ["address", "num_rooms", "price"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "House created"}
+        }
+      }
+    },
+    "/house/{house_id}": {
+      "get": {
+        "summary": "Get specific house by ID",
+        "security": [{"api_key": []}],
+        "parameters": [
+          {
+            "name": "house_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "House object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "integer"},
+                "address": {"type": "string"},
+                "num_rooms": {"type": "integer"},
+                "price": {"type": "number"}
+              }
+            }
+          },
+          "404": {
+            "description": "House not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
