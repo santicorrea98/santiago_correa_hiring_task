@@ -1,9 +1,9 @@
 import { UserRole } from '@/types';
 import axios from 'axios';
 
-type LoginResponse = {
+interface LoginResponse {
   token: string;
-};
+}
 
 export const handleLogin = async (role: UserRole): Promise<void> => {
   try {
@@ -13,6 +13,7 @@ export const handleLogin = async (role: UserRole): Promise<void> => {
 
     const token = res.data.token;
     localStorage.setItem('authToken', token);
+    localStorage.setItem('role', role);
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       throw new Error(err.response?.data?.message || 'Login request failed');

@@ -4,7 +4,7 @@ import { Button, Alert } from '@mui/material';
 import { handleLogin } from '@/api/login';
 import { UserRole } from '@/types';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
-import Spinner from '@/components/spinner';
+import Spinner from '@/components/spinner/Spinner';
 import LoginFrom from '@/components/login/LoginForm';
 import { Title } from '@/styles/global';
 import { LoginWrapper, LoginBox } from '@/styles/login';

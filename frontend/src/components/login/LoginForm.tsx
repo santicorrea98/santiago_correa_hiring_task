@@ -4,10 +4,10 @@ import { UserRole, userRoles } from '@/types';
 import { InputLabel, Select, MenuItem } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 
-type LoginFormType = {
+interface LoginFormType {
   role: UserRole | '';
   setRole: Dispatch<SetStateAction<UserRole | ''>>;
-};
+}
 
 export default function LoginFrom({ role, setRole }: LoginFormType) {
   return (
