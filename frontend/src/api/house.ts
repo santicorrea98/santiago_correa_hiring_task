@@ -16,7 +16,7 @@ export const getAllHouses = async (): Promise<AllHousesResponse> => {
   const token = localStorage.getItem('authToken');
   const res = await fetch(`${baseUrl}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
 
@@ -32,7 +32,7 @@ export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse>
   const token = localStorage.getItem('authToken');
   const res = await fetch(`${baseUrl}/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
 
@@ -50,7 +50,7 @@ export const handleCreateHouse = async (houseData: CreateHouseBody): Promise<str
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
     body: JSON.stringify(houseData),
   });

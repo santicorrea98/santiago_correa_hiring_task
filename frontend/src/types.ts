@@ -1,5 +1,6 @@
-export const userRoles = ['user', 'admin'] as const;
-export type UserRole = (typeof userRoles)[number];
+import { ADMIN_ROLE, USER_ROLE } from './constants';
+
+export type UserRole = typeof USER_ROLE | typeof ADMIN_ROLE;
 
 export type Action =
   | 'listProperties'
@@ -19,4 +20,10 @@ export interface House {
   address: string;
   num_rooms: number;
   price: number;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  role: string;
 }

@@ -1,6 +1,11 @@
 import { ActionOption, UserRole } from './types';
 
-export const MAP_USER_ROLE_OPTION: Record<UserRole, string> = { user: 'Agent', admin: 'Admin' };
+export const USER_ROLE = 'user';
+export const ADMIN_ROLE = 'admin';
+export const MAP_USER_ROLE_OPTION: Record<UserRole, string> = {
+  [USER_ROLE]: 'Agent',
+  [ADMIN_ROLE]: 'Admin',
+};
 
 export const ALL_ACTIONS: ActionOption[] = [
   { key: 'listProperties', label: 'List all properties' },
