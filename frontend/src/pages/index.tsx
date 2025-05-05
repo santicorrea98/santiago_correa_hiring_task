@@ -4,10 +4,9 @@ import { Button, Alert } from '@mui/material';
 import { handleLogin } from '@/api/login';
 import { UserRole } from '@/types';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
-import Spinner from '@/components/spinner/Spinner';
-import LoginFrom from '@/components/login/LoginForm';
-import { Title } from '@/styles/global';
-import { LoginWrapper, LoginBox } from '@/styles/login';
+import Spinner from '@/components/Spinner/Spinner';
+import LoginFrom from '@/components/Login/LoginForm';
+import { StyledBox, Title, Wrapper } from '@/styles/global';
 
 export default function Home() {
   const [role, setRole] = useState<UserRole | ''>('');
@@ -42,8 +41,8 @@ export default function Home() {
   }
 
   return (
-    <LoginWrapper>
-      <LoginBox>
+    <Wrapper>
+      <StyledBox>
         <Title variant="h5">Login</Title>
 
         <LoginFrom role={role} setRole={setRole} />
@@ -53,7 +52,7 @@ export default function Home() {
         </Button>
 
         {error && <Alert severity="error">{error}</Alert>}
-      </LoginBox>
-    </LoginWrapper>
+      </StyledBox>
+    </Wrapper>
   );
 }

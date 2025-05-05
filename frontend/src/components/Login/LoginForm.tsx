@@ -1,6 +1,6 @@
-import { MAP_USER_ROLE_OPTION } from '@/constants';
-import { LoginFormControl } from '@/styles/login';
-import { UserRole, userRoles } from '@/types';
+import { ALL_ROLES, MAP_USER_ROLE_OPTION } from '@/constants';
+import { StyledFormControl } from '@/styles/global';
+import { UserRole } from '@/types';
 import { InputLabel, Select, MenuItem } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 
@@ -11,7 +11,7 @@ interface LoginFormType {
 
 export default function LoginFrom({ role, setRole }: LoginFormType) {
   return (
-    <LoginFormControl fullWidth>
+    <StyledFormControl fullWidth>
       <InputLabel id="role-select-label">Select Role</InputLabel>
       <Select
         labelId="role-select-label"
@@ -19,12 +19,12 @@ export default function LoginFrom({ role, setRole }: LoginFormType) {
         onChange={(e) => setRole(e.target.value as UserRole)}
         label="Select Role"
       >
-        {userRoles.map((userRole) => (
-          <MenuItem key={userRole} value={userRole}>
-            {MAP_USER_ROLE_OPTION[userRole]}
+        {ALL_ROLES.map((role) => (
+          <MenuItem key={role} value={role}>
+            {MAP_USER_ROLE_OPTION[role]}
           </MenuItem>
         ))}
       </Select>
-    </LoginFormControl>
+    </StyledFormControl>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
-import Spinner from '@/components/spinner/Spinner';
-import DashboardLayout from '@/components/layouts/dashboard/Dashboard';
+import Spinner from '@/components/Spinner/Spinner';
+import DashboardLayout from '@/components/DashboardLayout/DashboardLayout';
 
 export default function Dashboard() {
   const { checkingAuth } = useAuthRedirect();
