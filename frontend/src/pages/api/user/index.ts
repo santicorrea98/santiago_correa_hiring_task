@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const cookies = parse(req.headers.cookie || '');
 
   if (!cookies.session) {
-    return res.status(401).json({ error: 'Authorization token missing' });
+    return res.status(401).json({ error: 'Token unauthorized. Refresh the page and login again.' });
   }
 
   const { token, role } = await decrypt(cookies.session);
