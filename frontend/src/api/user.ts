@@ -1,5 +1,6 @@
 import { ADMIN_ROLE } from '@/constants';
-import { User } from '@/types';
+import { ApiError, User } from '@/types';
+import { toCamelCaseObject, toSnakeCaseObject } from '@/utils';
 
 interface AllUsersResponse {
   users: User[];
@@ -32,7 +33,7 @@ export const getAllUsers = async (): Promise<AllUsersResponse> => {
     throw new Error(err || 'Failed to fetch users');
   }
 
-  return { users: (await res.json()) as User[] };
+  return { users: toCamelCaseObject(await res.json()) as User[] };
 };
 
 export const getUserDetails = async (id: number): Promise<UserDetailsResponse> => {
@@ -48,12 +49,20 @@ export const getUserDetails = async (id: number): Promise<UserDetailsResponse> =
     },
   });
 
+  if (res.status === 404) {
+    throw new ApiError(`User with ID ${id} not found`, 404);
+  }
+
+  if (res.status === 403) {
+    throw new ApiError(`Can't perform this action`, 403);
+  }
+
   if (!res.ok) {
     const err = await res.text();
     throw new Error(err || `Failed to fetch user with ID ${id}`);
   }
 
-  return { user: (await res.json()) as User };
+  return { user: toCamelCaseObject(await res.json()) as User };
 };
 
 export const handleCreateUser = async (userData: CreateUserBody): Promise<string> => {
@@ -70,7 +79,7 @@ export const handleCreateUser = async (userData: CreateUserBody): Promise<string
       'Content-Type': 'application/json',
       Authorization: `${token}`,
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(toSnakeCaseObject(userData)),
   });
 
   if (!res.ok) {

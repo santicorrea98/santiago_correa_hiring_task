@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const backRes = await fetch(`${process.env.API_URL}/user/${id}`, {
+    const backRes = await fetch(`${process.env.API_URL}/api/user/${id}`, {
       headers: { Authorization: token },
     });
 
