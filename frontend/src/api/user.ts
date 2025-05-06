@@ -82,6 +82,10 @@ export const handleCreateUser = async (userData: CreateUserBody): Promise<string
     body: JSON.stringify(toSnakeCaseObject(userData)),
   });
 
+  if (res.status === 400) {
+    throw new ApiError(`Uh oh! Something is wrong with the values entered`, 400);
+  }
+
   if (!res.ok) {
     const err = await res.text();
     throw new Error(err || 'Failed to create user');

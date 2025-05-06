@@ -4,6 +4,7 @@ import { Action } from '@/types';
 import {
   ALL_ACTIONS,
   CREATE_PROPERTY,
+  CREATE_USER,
   LIST_PROPERTIES,
   LIST_USERS,
   PROPERTY_DETAILS,
@@ -15,6 +16,7 @@ import HouseDetails from '@/components/House/HouseDetails';
 import CreateHouseForm from '@/components/House/CreateHouseForm';
 import UserList from '@/components/User/UserList';
 import UserDetails from '@/components/User/UserDetails';
+import CreateUserForm from '@/components/User/CreateUserForm';
 
 interface DashboardLayoutProps {
   isAdmin: boolean;
@@ -39,8 +41,8 @@ export default function DashboardLayout({ isAdmin }: DashboardLayoutProps) {
         return <UserList />;
       case USER_DETAIL:
         return <UserDetails />;
-      // case CREATE_USER:
-      //   return <CreateUserForm />;
+      case CREATE_USER:
+        return <CreateUserForm />;
       default:
         return <></>;
     }

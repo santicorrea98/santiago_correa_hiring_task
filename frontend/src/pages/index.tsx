@@ -29,7 +29,6 @@ export default function Home() {
       await handleLogin(role);
       router.push('/dashboard');
     } catch (err: unknown) {
-      console.error(err);
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setLoading(false);

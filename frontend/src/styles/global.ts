@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { Box, Card, FormControl, Grid, Typography } from '@mui/material';

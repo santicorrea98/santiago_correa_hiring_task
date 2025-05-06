@@ -34,8 +34,7 @@ export default function HouseList() {
       );
 
       setHouses(fetchedHouses);
-    } catch (error) {
-      console.error('Error fetching houses:', error);
+    } catch {
       setError('Failed to fetch houses. Please try again later.');
     } finally {
       setLoading(false);
