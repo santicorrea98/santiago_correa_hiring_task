@@ -146,8 +146,16 @@ def create_house():
 @app.route('/api/house/<int:house_id>', methods=['DELETE'])
 @token_required
 def delete_house(house_id):
-    # TODO: Implement logic to delete a house from the database
-    return jsonify({"message": "Delete functionality not implemented yet"}), 501 
+    house = houses_db.get(house_id)
+    if not house:
+        abort(404)
+
+    if request.current_user['role'] != 'admin':
+        abort(403)
+
+    houses_db.pop(house_id)
+    return jsonify({"message": "House deleted successfully"}), 200
+
 
 
 

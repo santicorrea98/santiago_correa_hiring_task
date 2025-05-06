@@ -42,7 +42,7 @@ class APITestCase(unittest.TestCase):
         self.assertIsInstance(response.get_json(), list)
 
     def test_get_single_house(self):
-        response = self.client.get('/api/house/1', headers=self.headers_user)
+        response = self.client.get('/api/house/2', headers=self.headers_user)
         self.assertEqual(response.status_code, 200)
         self.assertIn('address', response.get_json())
 
@@ -56,3 +56,15 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         data = response.get_json()
         self.assertEqual(data['address'], new_house['address'])
+
+    def test_delete_house_not_found(self):
+        response = self.client.delete('/api/house/99', headers=self.headers_admin)
+        self.assertEqual(response.status_code, 404)
+
+    def test_delete_house_forbidden(self):
+        response = self.client.delete('/api/house/1', headers=self.headers_user)
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete_house_successful(self):
+        response = self.client.delete('/api/house/1', headers=self.headers_admin)
+        self.assertEqual(response.status_code, 200)
