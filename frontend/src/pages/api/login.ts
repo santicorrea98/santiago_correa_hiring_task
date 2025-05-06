@@ -1,3 +1,5 @@
+import { encrypt } from '@/utils';
+import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,8 +25,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(backRes.status).json(error);
     }
 
-    const data = await backRes.json();
-    return res.status(200).json(data);
+    const { token } = await backRes.json();
+    const session = await encrypt({ token, role });
+
+    res.setHeader(
+      'Set-Cookie',
+      serialize('session', session, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+        maxAge: 300,
+      })
+    );
+
+    return res.status(200).json('Logged in!');
   } catch {
     return res.status(500).json({ message: 'Failed to fetch information. Try again later.' });
   }

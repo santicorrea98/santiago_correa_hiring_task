@@ -25,7 +25,7 @@ export default function HouseDetails() {
       setHouse(fetchedHouse);
       setHouseId(undefined);
     } catch (error) {
-      if (error instanceof ApiError && error.statusCode === 404) {
+      if (error instanceof ApiError) {
         setError(error.message);
       } else {
         setError('Failed to fetch house details. Please try again later.');

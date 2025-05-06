@@ -1,11 +1,15 @@
+import { decrypt } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { parse } from 'cookie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const token = req.headers.authorization;
+  const cookies = parse(req.headers.cookie || '');
 
-  if (!token) {
+  if (!cookies.session) {
     return res.status(401).json({ error: 'Authorization token missing' });
   }
+
+  const { token } = await decrypt(cookies.session);
 
   const { id } = req.query;
 

@@ -4,20 +4,33 @@ import { useRouter } from 'next/router';
 export default function useAuthRedirect() {
   const router = useRouter();
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [role, setRole] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const onHome = router.pathname === '/';
-    const onDashboard = router.pathname === '/dashboard';
+    const check = async () => {
+      const res = await fetch('/api/session');
+      const session = await res.json();
 
-    if (onHome && token) {
-      router.replace('/dashboard');
-    } else if (onDashboard && !token) {
-      router.replace('/');
-    } else {
-      setCheckingAuth(false);
-    }
+      setRole(session ? session.role : '');
+
+      if (!session) {
+        router.replace('/');
+      }
+
+      const onHome = router.pathname === '/';
+      const onDashboard = router.pathname === '/dashboard';
+
+      if (onHome && session.token) {
+        router.replace('/dashboard');
+      } else if (onDashboard && !session.token) {
+        router.replace('/');
+      } else {
+        setCheckingAuth(false);
+      }
+    };
+
+    check();
   }, [router]);
 
-  return { checkingAuth };
+  return { checkingAuth, role };
 }

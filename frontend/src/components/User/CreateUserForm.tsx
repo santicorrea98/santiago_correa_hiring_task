@@ -36,7 +36,7 @@ export default function CreateUserForm() {
       setUsername('');
       setRole('');
     } catch (error) {
-      if (error instanceof ApiError && error.statusCode === 400) {
+      if (error instanceof ApiError) {
         setError(error.message);
       } else {
         setError('Failed to create the property. Please try again later.');

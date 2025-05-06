@@ -5,7 +5,7 @@ import DashboardLayout from '@/components/DashboardLayout/DashboardLayout';
 import { Wrapper } from '@/styles/global';
 
 export default function Dashboard() {
-  const { checkingAuth } = useAuthRedirect();
+  const { checkingAuth, role } = useAuthRedirect();
 
   if (checkingAuth) {
     return (
@@ -14,8 +14,6 @@ export default function Dashboard() {
       </Wrapper>
     );
   }
-
-  const role = localStorage.getItem('role');
 
   return <DashboardLayout isAdmin={role === 'admin'} />;
 }

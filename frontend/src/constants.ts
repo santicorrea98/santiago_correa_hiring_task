@@ -37,3 +37,5 @@ export const ACTION_KEY_TO_CALL: Record<Action, Function> = {
 };
 
 export const MAX_ROOMS_FILTER = 3;
+
+export const ENCODED_KEY = new TextEncoder().encode(process.env.KEY);

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { getAllUsers } from '@/api/user';
-import { User } from '@/types';
+import { ApiError, User } from '@/types';
 import { Alert, CardContent, Grid } from '@mui/material';
 import { CardTitle, InfoText, StyledCard, StyledGrid } from '@/styles/global';
 import Spinner from '@/components/Spinner/Spinner';
@@ -18,8 +18,12 @@ export default function UserList() {
       const { users } = await getAllUsers();
 
       setUsers(users);
-    } catch {
-      setError('Failed to fetch houses. Please try again later.');
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Failed to fetch houses. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }

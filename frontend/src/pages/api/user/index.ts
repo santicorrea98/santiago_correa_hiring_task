@@ -1,10 +1,19 @@
+import { ADMIN_ROLE } from '@/constants';
+import { decrypt } from '@/utils';
+import { parse } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const token = req.headers.authorization;
+  const cookies = parse(req.headers.cookie || '');
 
-  if (!token) {
+  if (!cookies.session) {
     return res.status(401).json({ error: 'Authorization token missing' });
+  }
+
+  const { token, role } = await decrypt(cookies.session);
+
+  if (role !== ADMIN_ROLE) {
+    return res.status(401).json({ error: 'Action only allowed for admins' });
   }
 
   try {

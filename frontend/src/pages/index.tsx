@@ -36,7 +36,11 @@ export default function Home() {
   };
 
   if (checkingAuth) {
-    return <Spinner />;
+    return (
+      <Wrapper>
+        <Spinner />
+      </Wrapper>
+    );
   }
 
   return (

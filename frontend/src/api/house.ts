@@ -14,12 +14,11 @@ type CreateHouseBody = Omit<House, 'id'>;
 const baseUrl = '/api/house';
 
 export const getAllHouses = async (): Promise<AllHousesResponse> => {
-  const token = localStorage.getItem('authToken');
-  const res = await fetch(`${baseUrl}`, {
-    headers: {
-      Authorization: `${token}`,
-    },
-  });
+  const res = await fetch(`${baseUrl}`);
+
+  if (res.status === 401) {
+    throw new ApiError('Token unauthorized. Refresh the page and login again.', 401);
+  }
 
   if (!res.ok) {
     const err = await res.text();
@@ -30,12 +29,11 @@ export const getAllHouses = async (): Promise<AllHousesResponse> => {
 };
 
 export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse> => {
-  const token = localStorage.getItem('authToken');
-  const res = await fetch(`${baseUrl}/${id}`, {
-    headers: {
-      Authorization: `${token}`,
-    },
-  });
+  const res = await fetch(`${baseUrl}/${id}`);
+
+  if (res.status === 401) {
+    throw new ApiError('Token unauthorized. Refresh the page and login again.', 401);
+  }
 
   if (res.status === 404) {
     throw new ApiError(`House with ID ${id} not found`, 404);
@@ -50,15 +48,17 @@ export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse>
 };
 
 export const handleCreateHouse = async (houseData: CreateHouseBody): Promise<string> => {
-  const token = localStorage.getItem('authToken');
   const res = await fetch(`${baseUrl}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${token}`,
     },
     body: JSON.stringify(toSnakeCaseObject(houseData)),
   });
+
+  if (res.status === 401) {
+    throw new ApiError('Token unauthorized. Refresh the page and login again.', 401);
+  }
 
   if (res.status === 400) {
     throw new ApiError(`Uh oh! Something is wrong with the values entered`, 400);

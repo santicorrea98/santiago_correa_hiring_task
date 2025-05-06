@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { getAllHouses } from '@/api/house';
-import { House } from '@/types';
+import { ApiError, House } from '@/types';
 import { FilterBar, FilterBarOptions } from '@/components/FilterBar/FilterBar';
 import { MAX_ROOMS_FILTER } from '@/constants';
 import { Alert, CardContent, Grid } from '@mui/material';
@@ -34,8 +34,12 @@ export default function HouseList() {
       );
 
       setHouses(fetchedHouses);
-    } catch {
-      setError('Failed to fetch houses. Please try again later.');
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Failed to fetch houses. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }

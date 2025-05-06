@@ -25,7 +25,7 @@ export default function UserDetails() {
       setUser(fetchedUser);
       setUserId(undefined);
     } catch (error) {
-      if (error instanceof ApiError && (error.statusCode === 404 || error.statusCode === 403)) {
+      if (error instanceof ApiError) {
         setError(error.message);
       } else {
         setError('Failed to fetch user details. Please try again later.');
