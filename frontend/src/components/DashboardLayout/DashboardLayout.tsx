@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Action } from '@/types';
-import { ALL_ACTIONS, CREATE_PROPERTY, LIST_PROPERTIES, PROPERTY_DETAILS } from '@/constants';
-import { HouseList } from '@/components/House/HouseList';
+import {
+  ALL_ACTIONS,
+  CREATE_PROPERTY,
+  LIST_PROPERTIES,
+  LIST_USERS,
+  PROPERTY_DETAILS,
+} from '@/constants';
+import HouseList from '@/components/House/HouseList';
 import { StyledBox, StyledFormControl, Title, Wrapper } from '@/styles/global';
-import { HouseDetails } from '../House/HouseDetails';
-import CreateHouseForm from '../House/CreateHouseForm';
+import HouseDetails from '@/components/House/HouseDetails';
+import CreateHouseForm from '@/components/House/CreateHouseForm';
+import UserList from '@/components/User/UserList';
 
 interface DashboardLayoutProps {
   isAdmin: boolean;
@@ -26,8 +33,8 @@ export default function DashboardLayout({ isAdmin }: DashboardLayoutProps) {
         return <HouseDetails />;
       case CREATE_PROPERTY:
         return <CreateHouseForm />;
-      // case LIST_USERS:
-      //   return <UserList />;
+      case LIST_USERS:
+        return <UserList />;
       // case USER_DETAIL:
       //   return <UserDetails />;
       // case CREATE_USER:

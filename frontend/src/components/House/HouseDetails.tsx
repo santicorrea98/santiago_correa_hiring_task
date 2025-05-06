@@ -5,7 +5,7 @@ import { CardContent, Grid, TextField, Button } from '@mui/material';
 import { CardTitle, InfoText, StyledBox, StyledCard, StyledGrid } from '@/styles/global';
 import Spinner from '@/components/Spinner/Spinner';
 
-export const HouseDetails = () => {
+export default function HouseDetails() {
   const [houseId, setHouseId] = useState<string | undefined>(undefined);
   const [house, setHouse] = useState<House | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,4 +82,4 @@ export const HouseDetails = () => {
       ) : null}
     </>
   );
-};
+}

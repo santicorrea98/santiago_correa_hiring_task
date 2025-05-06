@@ -10,7 +10,7 @@ import Spinner from '@/components/Spinner/Spinner';
 const roomFilter = (house: House, rooms: number): boolean =>
   rooms === MAX_ROOMS_FILTER ? house.numRooms >= rooms : house.numRooms === rooms;
 
-export const HouseList = () => {
+export default function HouseList() {
   const [houses, setHouses] = useState<House[]>([]);
   const [filter, setFilter] = useState<FilterBarOptions>({ priceAsc: false });
   const [loading, setLoading] = useState<boolean>(false);
@@ -72,4 +72,4 @@ export const HouseList = () => {
       )}
     </>
   );
-};
+}
