@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const token = req.headers.authorization;
@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const backRes = await fetch(`${process.env.API_URL}/house/${id}`, {
+    const backRes = await fetch(`${process.env.API_URL}/api/house/${id}`, {
       headers: { Authorization: token },
     });
 

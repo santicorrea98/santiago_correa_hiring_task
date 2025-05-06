@@ -1,4 +1,4 @@
-import { House } from '@/types';
+import { ApiError, House } from '@/types';
 
 interface AllHousesResponse {
   houses: House[];
@@ -35,6 +35,10 @@ export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse>
       Authorization: `${token}`,
     },
   });
+
+  if (res.status === 404) {
+    throw new ApiError(`House with ID ${id} not found`, 404);
+  }
 
   if (!res.ok) {
     const err = await res.text();

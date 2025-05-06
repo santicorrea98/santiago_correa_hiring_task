@@ -1,11 +1,13 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { InputLabel, MenuItem, Select } from '@mui/material';
+import { IconButton, InputLabel, MenuItem, Select } from '@mui/material';
 import { FilterBarWrapper } from './FilterBar.styles';
 import { StyledFormControl } from '@/styles/global';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 export interface FilterBarOptions {
   rooms?: number;
-  price?: number;
+  priceAsc: boolean;
 }
 
 interface Option {
@@ -26,14 +28,6 @@ const roomOptions: Option[] = [
   { value: 3, label: '3 or more' },
 ];
 
-const priceOptions: Option[] = [
-  { label: 'All' },
-  { value: 100, label: 'Less than £100' },
-  { value: 200, label: 'Less than £200' },
-  { value: 300, label: 'Less than £300' },
-  { value: 400, label: '£400 or more' },
-];
-
 export const FilterBar = ({ filter, setFilter }: FilterBarProps) => (
   <FilterBarWrapper>
     <StyledFormControl sx={{ flex: 1 }}>
@@ -51,19 +45,24 @@ export const FilterBar = ({ filter, setFilter }: FilterBarProps) => (
       </Select>
     </StyledFormControl>
 
-    <StyledFormControl sx={{ flex: 1 }}>
+    <StyledFormControl sx={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <InputLabel>Price</InputLabel>
-      <Select
-        value={filter.price}
-        onChange={(e) => setFilter((prev) => ({ ...prev, price: Number(e.target.value) }))}
-        label="Price"
+      <IconButton
+        size="small"
+        onClick={() => setFilter((prev) => ({ ...prev, priceAsc: !prev.priceAsc }))}
+        sx={{
+          border: '1px solid #ccc',
+          borderRadius: 1,
+          padding: '4px',
+          '&:hover': { backgroundColor: 'transparent' },
+        }}
       >
-        {priceOptions.map((priceOption) => (
-          <MenuItem key={priceOption.value} value={priceOption.value}>
-            {priceOption.label}
-          </MenuItem>
-        ))}
-      </Select>
+        {filter.priceAsc ? (
+          <ArrowUpwardIcon fontSize="small" />
+        ) : (
+          <ArrowDownwardIcon fontSize="small" />
+        )}
+      </IconButton>
     </StyledFormControl>
   </FilterBarWrapper>
 );

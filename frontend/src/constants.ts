@@ -37,4 +37,3 @@ export const ACTION_KEY_TO_CALL: Record<Action, Function> = {
 };
 
 export const MAX_ROOMS_FILTER = 3;
-export const MAX_PRICE_FILTER = 400;

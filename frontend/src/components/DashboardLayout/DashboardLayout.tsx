@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Action } from '@/types';
-import { ALL_ACTIONS, LIST_PROPERTIES } from '@/constants';
+import { ALL_ACTIONS, LIST_PROPERTIES, PROPERTY_DETAILS } from '@/constants';
 import { HouseList } from '@/components/House/HouseList';
 import { StyledBox, StyledFormControl, Title, Wrapper } from '@/styles/global';
+import { HouseDetails } from '../House/HouseDetails';
 
 interface DashboardLayoutProps {
   isAdmin: boolean;
@@ -21,8 +22,8 @@ export default function DashboardLayout({ isAdmin }: DashboardLayoutProps) {
     switch (action) {
       case LIST_PROPERTIES:
         return <HouseList />;
-      // case PROPERTY_DETAILS:
-      //   return <HouseDetails />;
+      case PROPERTY_DETAILS:
+        return <HouseDetails />;
       // case CREATE_PROPERTY:
       //   return <CreateHouseForm />;
       // case LIST_USERS:
