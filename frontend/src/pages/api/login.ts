@@ -5,10 +5,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { role } = req.body;
+  const { role } = JSON.parse(req.body);
 
   if (typeof role !== 'string') {
-    return res.status(400).json({ message: 'Invalid token' });
+    return res.status(400).json({ message: 'Invalid role' });
   }
 
   try {
