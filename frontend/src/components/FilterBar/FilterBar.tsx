@@ -34,7 +34,12 @@ export const FilterBar = ({ filter, setFilter }: FilterBarProps) => (
       <InputLabel>Rooms</InputLabel>
       <Select
         value={filter.rooms}
-        onChange={(e) => setFilter((prev) => ({ ...prev, rooms: Number(e.target.value) }))}
+        onChange={(e) =>
+          setFilter((prev) => ({
+            ...prev,
+            rooms: typeof e.target.value === 'number' ? e.target.value : undefined,
+          }))
+        }
         label="Rooms"
       >
         {roomOptions.map((roomOption) => (

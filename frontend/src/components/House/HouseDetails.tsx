@@ -12,11 +12,18 @@ export const HouseDetails = () => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   const fetchHouseDetails = async (id: number) => {
-    setLoading(true);
     setError(undefined);
+
+    if (Number(houseId) <= 0) {
+      setError('The ID must be larger than 0');
+      return;
+    }
+
+    setLoading(true);
     try {
       const { house: fetchedHouse } = await getHouseDetails(id);
       setHouse(fetchedHouse);
+      setHouseId(undefined);
     } catch (error) {
       if (error instanceof ApiError && error.statusCode === 404) {
         setError(error.message);
@@ -66,7 +73,7 @@ export const HouseDetails = () => {
               <CardContent>
                 <CardTitle variant="h6">House Details - #{house.id}</CardTitle>
                 <InfoText>Address: {house.address}</InfoText>
-                <InfoText>Rooms: {house.num_rooms}</InfoText>
+                <InfoText>Rooms: {house.numRooms}</InfoText>
                 <InfoText>Price: £{house.price}</InfoText>
               </CardContent>
             </StyledCard>

@@ -27,7 +27,7 @@ export interface ActionOption {
 export interface House {
   id: number;
   address: string;
-  num_rooms: number;
+  numRooms: number;
   price: number;
 }
 

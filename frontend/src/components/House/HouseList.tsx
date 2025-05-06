@@ -8,7 +8,7 @@ import { CardTitle, InfoText, StyledCard, StyledGrid } from '@/styles/global';
 import Spinner from '@/components/Spinner/Spinner';
 
 const roomFilter = (house: House, rooms: number): boolean =>
-  rooms === MAX_ROOMS_FILTER ? house.num_rooms >= rooms : house.num_rooms === rooms;
+  rooms === MAX_ROOMS_FILTER ? house.numRooms >= rooms : house.numRooms === rooms;
 
 export const HouseList = () => {
   const [houses, setHouses] = useState<House[]>([]);
@@ -62,7 +62,7 @@ export const HouseList = () => {
                 <CardContent>
                   <CardTitle variant="h6">House #{house.id}</CardTitle>
                   <InfoText>Address: {house.address}</InfoText>
-                  <InfoText>Rooms: {house.num_rooms}</InfoText>
+                  <InfoText>Rooms: {house.numRooms}</InfoText>
                   <InfoText>Price: £{house.price}</InfoText>
                 </CardContent>
               </StyledCard>

@@ -1,4 +1,5 @@
 import { ApiError, House } from '@/types';
+import { toCamelCaseObject, toSnakeCaseObject } from '@/utils';
 
 interface AllHousesResponse {
   houses: House[];
@@ -25,7 +26,7 @@ export const getAllHouses = async (): Promise<AllHousesResponse> => {
     throw new Error(err || 'Failed to fetch houses');
   }
 
-  return { houses: (await res.json()) as House[] };
+  return { houses: toCamelCaseObject(await res.json()) as House[] };
 };
 
 export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse> => {
@@ -45,7 +46,7 @@ export const getHouseDetails = async (id: number): Promise<HouseDetailsResponse>
     throw new Error(err || `Failed to fetch house with ID ${id}`);
   }
 
-  return { house: (await res.json()) as House };
+  return { house: toCamelCaseObject(await res.json()) as House };
 };
 
 export const handleCreateHouse = async (houseData: CreateHouseBody): Promise<string> => {
@@ -56,8 +57,12 @@ export const handleCreateHouse = async (houseData: CreateHouseBody): Promise<str
       'Content-Type': 'application/json',
       Authorization: `${token}`,
     },
-    body: JSON.stringify(houseData),
+    body: JSON.stringify(toSnakeCaseObject(houseData)),
   });
+
+  if (res.status === 400) {
+    throw new ApiError(`Uh oh! Something is wrong with the values entered`, 400);
+  }
 
   if (!res.ok) {
     const err = await res.text();
