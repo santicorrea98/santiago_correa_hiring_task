@@ -11,6 +11,13 @@ This is a guide to run it locally.
 
 ## Prerequisites
 
+Include the follwing file `./frontend/.env.local` with these values:
+
+```
+API_URL=http://localhost:5000
+KEY=secret-key
+```
+
 Before running the application, make sure you have the following installed:
 
 ### For Frontend:
